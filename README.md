@@ -1,2 +1,1 @@
 # JSPStudy
-JSPStudy

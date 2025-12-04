@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>JSPStudy</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.xhtml</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>default.xhtml</welcome-file>
+	</welcome-file-list>
+
+	<!-- 컨텍스트 초기화 파라미터 : 웹 애플리케이션 전체에서 사용 가능한 일종의 상수값 혹은 설정값으로 사용 -->
+	<context-param>
+		<param-name>INIT_PARAM</param-name>
+		<param-value>web.xml에 저장한 초기화 매개변수</param-value>
+	</context-param>
+
+	<!-- 오라클 DB에 연결을 위한 접속 정보를 컨텍스트 초기화 파라미터에 설정 jsp 파일에서 application.getInitParameter("param-name")을 
+		통해 가져올 수 있다 -->
+	<context-param>
+		<param-name>OracleDriver</param-name>
+		<param-value>oracle.jdbc.OracleDriver</param-value>
+	</context-param>
+	<context-param>
+		<param-name>OracleURL</param-name>
+		<param-value>jdbc:oracle:thin:@localhost:1521:xe</param-value>
+	</context-param>
+	<context-param>
+		<param-name>OracleId</param-name>
+		<param-value>musthave</param-value>
+	</context-param>
+	<context-param>
+		<param-name>OraclePwd</param-name>
+		<param-value>1234</param-value>
+	</context-param>
+	<!-- 페이징 처리를 위한 설정값 
+	POSTS_PER_PAGE : 한 페이지에 출력할 게시물의 개수 
+	OAGES_PER_BLOCK : 한 블럭당 출력할 페이지 번호의 개수 
+	-->
+	<context-param>
+		<param-name>POSTS_PER_PAGE</param-name>
+		<param-value>10</param-value>
+	</context-param>
+	<context-param>
+		<param-name>PAGES_PER_BLOCK</param-name>
+		<param-value>5</param-value>
+	</context-param>
+
+
+	<!-- 세션 유지 시간 설정 (분 단위) -->
+	<session-config>
+		<session-timeout>25</session-timeout>
+	</session-config>
+
+	<!-- 서블릿 요청명에 대한 매핑 설정. -->
+	<servlet>
+		<servlet-name>HelloServlet</servlet-name>
+		<servlet-class>servlet.HelloServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HelloServlet</servlet-name>
+		<url-pattern>/12Servlet/HelloServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<!-- 서블릿에서 직접 내용 출력(JSP를 View로 사용하지 않는다) -->
+	<servlet>
+		<servlet-name>DirectServletPrint</servlet-name>
+		<servlet-class>servlet.DirectServletPrint</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DirectServletPrint</servlet-name>
+		<url-pattern>/12Servlet/DirectServletPrint.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>MemberAuth</servlet-name>
+		<servlet-class>servlet.MemberAuth</servlet-class>
+		<init-param>
+			<param-name>admin_id</param-name>
+			<param-value>nakja</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MemberAuth</servlet-name>
+		<url-pattern>/12Servlet/MemberAuth.mvc</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>MVCBoardList</servlet-name>
+		<servlet-class>model2.mvcboard.ListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MVCBoardList</servlet-name>
+		<url-pattern>/mvcboard/list.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>MVCBoardListPage</servlet-name>
+		<servlet-class>model2.mvcboard.ListPageController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MVCBoardListPage</servlet-name>
+		<url-pattern>/mvcboard/listPage.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>MVCBoardWrite</servlet-name>
+		<servlet-class>model2.mvcboard.WriteController</servlet-class>
+		<multipart-config>
+			<max-file-size>10485760</max-file-size> <!-- 10MB -->
+			<max-request-size>1048576000</max-request-size> <!-- 1000MB -->
+		</multipart-config>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MVCBoardWrite</servlet-name>
+		<url-pattern>/mvcboard/write.do</url-pattern>
+	</servlet-mapping>
+
+</web-app>
